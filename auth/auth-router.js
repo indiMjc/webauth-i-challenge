@@ -26,9 +26,18 @@ router.post('/login', (req, res) => {
   Users.findBy({ username })
     .first()
     .then(user => {
-      user && bcrypt.compareSync(password, user.password)
+      console.log('async resolves to', bcrypt.compare(password, user.password));
+      console.log(
+        'sync resolves to',
+        bcrypt.compareSync(password, user.password)
+      );
+      user && bcrypt.compare(password, user.password)
         ? res.status(200).json({ message: `Welcome, ${user.username}!` })
-        : res.status(401).json({ message: 'Invalid credentials.' });
+        : res.status(401).json({ message: 'You shall not pass!' });
+    })
+    .catch(err => {
+      console.log(err);
+      res.status(500).json({ message: 'Error while logging in.' });
     });
 });
 
