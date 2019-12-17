@@ -11,8 +11,7 @@ const server = express();
 
 const sessionConfig = {
   name: 'christmasCookies',
-  //   secret: process.env.SECRET,
-  secret: 'secret',
+  secret: process.env.SECRET,
   resave: false,
   saveUninitialized: true,
 
